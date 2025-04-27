@@ -38,9 +38,9 @@ with open('model/flag_encoder.pkl', 'rb') as f:
 with open('model/ids_randomforest_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-# 4. Load sample data files
-normal_df = pd.read_csv('data/normal.csv')
-dos_df = pd.read_csv('data/dos.csv')
+# 4. Load sample data files (now compressed)
+normal_df = pd.read_csv('data/compressed_normal.csv.gz', compression='gzip')
+dos_df = pd.read_csv('data/compressed_dos.csv.gz', compression='gzip')
 probe_df = pd.read_csv('data/probe.csv')
 r2l_df = pd.read_csv('data/r2l.csv')
 u2r_df = pd.read_csv('data/u2r.csv')
