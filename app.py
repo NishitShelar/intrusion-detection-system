@@ -94,7 +94,24 @@ threading.Thread(target=data_streaming_thread, daemon=True).start()
 
 @app.route('/stream_data', methods=['GET'])
 def stream_data():
-    return jsonify(current_data_row)
+    global attack_mode
+
+    # Always fetch a fresh row when the API is called
+    if attack_mode.lower() == 'normal':
+        sample_row = normal_df.sample(1).to_dict(orient='records')[0]
+    elif attack_mode.lower() == 'dos':
+        sample_row = dos_df.sample(1).to_dict(orient='records')[0]
+    elif attack_mode.lower() == 'probe':
+        sample_row = probe_df.sample(1).to_dict(orient='records')[0]
+    elif attack_mode.lower() == 'r2l':
+        sample_row = r2l_df.sample(1).to_dict(orient='records')[0]
+    elif attack_mode.lower() == 'u2r':
+        sample_row = u2r_df.sample(1).to_dict(orient='records')[0]
+    else:
+        sample_row = normal_df.sample(1).to_dict(orient='records')[0]
+
+    return jsonify(sample_row)
+
 
 # ==================== PREDICTION ====================
 
